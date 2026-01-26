@@ -319,3 +319,37 @@ header a{
     grid-template-columns:1fr;
   }
 }
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px; /* Adjust padding for smaller screens */
+    gap: 15px; /* Ensures space between links even if screen shrinks */
+  }
+
+  nav a {
+    text-decoration: none;
+    white-space: nowrap; /* Prevents the text/button from breaking into two lines */
+    font-size: 14px; /* Slightly smaller font to fit better */
+  }
+
+  nav a.btn {
+    display: inline-block;
+    padding: 8px 16px; /* Optimized button size for mobile */
+    text-align: center;
+  }
+}
+
+/* Extra small devices (below 360px) */
+@media (max-width: 360px) {
+  nav {
+    gap: 8px;
+    padding: 10px 10px;
+  }
+  
+  nav a {
+    font-size: 13px;
+  }
+}
