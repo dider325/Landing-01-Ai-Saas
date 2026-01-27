@@ -95,3 +95,66 @@
   });
 
 })();
+
+const reveals = document.querySelectorAll(
+  '.card, .step, .price, .faq div, .footer-grid > div'
+);
+
+const revealOnScroll = () => {
+  const trigger = window.innerHeight * 0.85;
+
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if (top < trigger) el.classList.add('show');
+  });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
+
+document.querySelectorAll('.btn,.footer-btn').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    btn.style.setProperty('--x',e.clientX-r.left+'px');
+    btn.style.setProperty('--y',e.clientY-r.top+'px');
+  });
+});
+
+
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    item.classList.toggle('active');
+  });
+});
+
+
+document.querySelectorAll(".faq-item").forEach(item=>{
+  item.addEventListener("click",()=>{
+    item.classList.toggle("active");
+  });
+});
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:0.15});
+
+document.querySelectorAll(".card, .step, .price, .faq-item")
+  .forEach(el=>observer.observe(el));
+
+  document.querySelectorAll(".faq-item").forEach(item=>{
+  item.addEventListener("click",()=>{
+    item.classList.toggle("active");
+  });
+});
+
+
+
+
+
+
+
+
