@@ -152,6 +152,27 @@ document.querySelectorAll(".card, .step, .price, .faq-item")
 });
 
 
+const wrapper = document.querySelector(".gallery-wrapper");
+const track = document.querySelector(".gallery-track");
+
+let isTouching = false;
+
+wrapper.addEventListener("touchstart", () => {
+  isTouching = true;
+  track.style.animationPlayState = "paused";
+});
+
+wrapper.addEventListener("touchmove", (e) => {
+  wrapper.scrollLeft -= e.touches[0].clientX;
+});
+
+wrapper.addEventListener("touchend", () => {
+  isTouching = false;
+  track.style.animationPlayState = "running";
+});
+
+
+
 
 
 

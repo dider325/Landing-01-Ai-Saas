@@ -449,6 +449,11 @@ header a{
     min-width:300px;
     height:200px;
   }
+  .gallery-wrapper{
+  overflow:hidden;
+  touch-action:pan-x;
+}
+
 }
 
 /* ================= CASE ================= */
