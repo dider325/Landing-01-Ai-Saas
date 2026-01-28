@@ -152,30 +152,41 @@ document.querySelectorAll(".card, .step, .price, .faq-item")
 });
 
 
-const wrapper = document.querySelector(".gallery-wrapper");
-const track = document.querySelector(".gallery-track");
 
-let isTouching = false;
+// Gallery Section
 
-wrapper.addEventListener("touchstart", () => {
-  isTouching = true;
-  track.style.animationPlayState = "paused";
+const wrapper = document.getElementById('galleryWrapper');
+const track = document.getElementById('galleryTrack');
+let autoScrollInterval;
+let isUserInteracting = false;
+
+function startAutoScroll() {
+    // Auto-scroll will only happen on mobile
+    if (window.innerWidth > 768) return;
+
+    autoScrollInterval = setInterval(() => {
+        if (!isUserInteracting) {
+            wrapper.scrollLeft += 1;
+            
+            // Loop logic
+            if (wrapper.scrollLeft >= (track.scrollWidth / 2)) {
+                wrapper.scrollLeft = 0;
+            }
+        }
+    }, 20); // Speed control
+}
+
+// Stop auto-scroll when user touches
+wrapper.addEventListener('touchstart', () => {
+    isUserInteracting = true;
 });
 
-wrapper.addEventListener("touchmove", (e) => {
-  wrapper.scrollLeft -= e.touches[0].clientX;
+// Resume auto-scroll a short time after touch ends
+wrapper.addEventListener('touchend', () => {
+    setTimeout(() => {
+        isUserInteracting = false;
+    }, 2000); 
 });
 
-wrapper.addEventListener("touchend", () => {
-  isTouching = false;
-  track.style.animationPlayState = "running";
-});
-
-
-
-
-
-
-
-
-
+// Start auto-scroll on page load
+window.addEventListener('load', startAutoScroll);
