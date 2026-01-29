@@ -4,7 +4,17 @@
    Purpose: Landing Page Hero Background
 ===================================================== */
 
+/* =====================================================
+   3D HERO ORB — THREE.JS (Theme Aware)
+   Author: Digitora
+===================================================== */
+
 (function () {
+
+  /* ---------- THEME HELPER ---------- */
+  function isLightTheme() {
+    return document.documentElement.getAttribute("data-theme") === "light";
+  }
 
   /* ---------- CONFIG ---------- */
   const CONFIG = {
@@ -39,9 +49,10 @@
   camera.position.z = CONFIG.cameraZ;
 
   /* ---------- LIGHTING ---------- */
-  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+  const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambient);
 
-  const keyLight = new THREE.PointLight(0x3dd5ff, 1.2);
+  const keyLight = new THREE.PointLight(0xffffff, 1.2);
   keyLight.position.set(3, 2, 4);
   scene.add(keyLight);
 
@@ -49,30 +60,45 @@
   const group = new THREE.Group();
   scene.add(group);
 
-  /* Orb */
+  /* ---------- ORB ---------- */
+  const orbMaterial = new THREE.MeshStandardMaterial({});
   const orb = new THREE.Mesh(
     new THREE.SphereGeometry(1.1, 64, 64),
-    new THREE.MeshStandardMaterial({
-      color: 0x0b1520,
-      metalness: 0.7,
-      roughness: 0.25,
-      emissive: 0x082a33,
-      emissiveIntensity: 0.2
-    })
+    orbMaterial
   );
   group.add(orb);
 
-  /* Ring */
+  /* ---------- RING ---------- */
+  const ringMaterial = new THREE.MeshStandardMaterial({});
   const ring = new THREE.Mesh(
     new THREE.TorusGeometry(1.7, 0.16, 80, 200),
-    new THREE.MeshStandardMaterial({
-      color: 0x17c6d9,
-      metalness: 0.5,
-      roughness: 0.3
-    })
+    ringMaterial
   );
   ring.rotation.x = Math.PI * 0.22;
   group.add(ring);
+
+  /* ---------- THEME APPLY ---------- */
+  function applyTheme() {
+    const light = isLightTheme();
+
+    // ORB
+    orbMaterial.color.set(light ? 0xeaf2ff : 0x0b1520);
+    orbMaterial.emissive.set(light ? 0x9ecbff : 0x082a33);
+    orbMaterial.emissiveIntensity = light ? 0.35 : 0.2;
+    orbMaterial.metalness = light ? 0.4 : 0.7;
+    orbMaterial.roughness = light ? 0.45 : 0.25;
+
+    // RING
+    ringMaterial.color.set(light ? 0x4f8cff : 0x17c6d9);
+    ringMaterial.metalness = light ? 0.35 : 0.5;
+    ringMaterial.roughness = light ? 0.55 : 0.3;
+
+    // LIGHT
+    ambient.intensity = light ? 0.75 : 0.4;
+    keyLight.intensity = light ? 0.9 : 1.2;
+  }
+
+  applyTheme(); // initial call
 
   /* ---------- ANIMATION LOOP ---------- */
   function animate() {
@@ -94,7 +120,15 @@
     camera.updateProjectionMatrix();
   });
 
+  /* ---------- THEME LISTENER ---------- */
+  const observer = new MutationObserver(applyTheme);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+
 })();
+
 
 const reveals = document.querySelectorAll(
   '.card, .step, .price, .faq div, .footer-grid > div'
@@ -154,39 +188,77 @@ document.querySelectorAll(".card, .step, .price, .faq-item")
 
 
 // Gallery Section
+/* =========================
+   GALLERY AUTO SCROLL – FIXED FOR MOBILE
+========================= */
 
 const wrapper = document.getElementById('galleryWrapper');
-const track = document.getElementById('galleryTrack');
-let autoScrollInterval;
+const track   = document.getElementById('galleryTrack');
+
+let autoScrollInterval = null;
 let isUserInteracting = false;
 
+/* ---------- AUTO SCROLL ---------- */
 function startAutoScroll() {
-    // Auto-scroll will only happen on mobile
-    if (window.innerWidth > 768) return;
+  stopAutoScroll();
 
-    autoScrollInterval = setInterval(() => {
-        if (!isUserInteracting) {
-            wrapper.scrollLeft += 1;
-            
-            // Loop logic
-            if (wrapper.scrollLeft >= (track.scrollWidth / 2)) {
-                wrapper.scrollLeft = 0;
-            }
-        }
-    }, 20); // Speed control
+  if (window.innerWidth > 768) return;
+
+  autoScrollInterval = setInterval(() => {
+    if (isUserInteracting) return;
+
+    wrapper.scrollLeft += 0.6;
+
+    const maxScroll = track.scrollWidth - wrapper.clientWidth;
+    if (wrapper.scrollLeft >= maxScroll) {
+      wrapper.scrollLeft = 0;
+    }
+  }, 30);
 }
 
-// Stop auto-scroll when user touches
-wrapper.addEventListener('touchstart', () => {
-    isUserInteracting = true;
-});
+function stopAutoScroll() {
+  if (autoScrollInterval) {
+    clearInterval(autoScrollInterval);
+    autoScrollInterval = null;
+  }
+}
 
-// Resume auto-scroll a short time after touch ends
-wrapper.addEventListener('touchend', () => {
-    setTimeout(() => {
-        isUserInteracting = false;
-    }, 2000); 
-});
+/* ---------- PAUSE / RESUME ---------- */
+function pauseGallery() {
+  isUserInteracting = true;
+  track.style.animationPlayState = 'paused'; // 🔥 key fix
+}
 
-// Start auto-scroll on page load
+function resumeGallery() {
+  setTimeout(() => {
+    isUserInteracting = false;
+    track.style.animationPlayState = 'running';
+  }, 1200);
+}
+
+/* touch events (mobile) */
+wrapper.addEventListener('touchstart', pauseGallery);
+wrapper.addEventListener('touchend', resumeGallery);
+
+/* mouse events (desktop safety) */
+wrapper.addEventListener('mouseenter', pauseGallery);
+wrapper.addEventListener('mouseleave', resumeGallery);
+
+/* restart on resize */
+window.addEventListener('resize', startAutoScroll);
+
+/* init */
 window.addEventListener('load', startAutoScroll);
+
+
+ // --- THEME SWITCHER LOGIC ---
+  const toggleBtn = document.getElementById('toggleMode');
+  const html = document.documentElement;
+  
+  toggleBtn.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', newTheme);
+    toggleBtn.innerText = newTheme === 'light' ? '☀️' : '🌙';
+    localStorage.setItem('theme', newTheme);
+  });
