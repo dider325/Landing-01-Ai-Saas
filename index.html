@@ -5,44 +5,102 @@
   <title>Automation Agency Landing</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- ================= Fonts ================= -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="Assets/Css/style.css">
+  <!-- ================= Main Styles ================= -->
+  <link rel="stylesheet" href="Assets/Css/style.css" />
 
-  <!-- Three.js -->
+  <!-- ================= Three.js (Hero Orb) ================= -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
 </head>
+
 <body>
 
+<!-- ======================================================
+  HEADER / NAVBAR
+  Mobile: Services link can be hidden via CSS
+====================================================== -->
 <header>
   <div class="brand">Digitora</div>
+
   <nav>
     <a class="nav-service" href="#services">Services</a>
     <a href="#pricing" class="btn">Get Started</a>
-    <button class="theme-toggle" id="toggleMode">🌙</button>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="toggleMode" aria-label="Toggle theme">
+      🌙
+    </button>
   </nav>
 </header>
 
-<!-- HERO -->
+<!-- ======================================================
+  HERO SECTION (3D Orb Background)
+====================================================== -->
 <section class="hero">
-  <div id="canvas3d"></div>
+  <!-- Three.js Canvas Container -->
+  <div id="canvas3d" aria-hidden="true"></div>
+
+  <!-- Hero Content -->
   <div class="hero-content">
-    <h1>Automation That <span class="accent">Scales Your Business</span></h1>
-    <p>High-performance automation solutions for agencies, freelancers & digital teams.</p>
+    <h1>
+      Automation That
+      <span class="accent">Scales Your Business</span>
+    </h1>
+
+    <p>
+      High-performance automation solutions for agencies,
+      freelancers & digital teams.
+    </p>
+
     <div class="actions">
       <a class="btn">Book Free Call</a>
-      <a href="#case" class="btn" style="background:transparent;color:white;border:1px solid rgba(255,255,255,.3); text-decoration: none;">View Case Studies</a>
+     <a href="#case" class="btn btn-outline">
+      View Case Studies
+    </a>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ======================================================
+  ABOUT US
+====================================================== --> 
 
+<section class="about">
+  <h2>Why Digitora</h2>
+  <p>
+    Digitora is an automation-focused digital agency helping businesses
+    scale faster with smart workflows, AI tools, and performance-driven design.
+  </p>
+
+  <div class="about-grid">
+    <div>
+      <h4>⚡ Automation First</h4>
+      <p>We design systems that reduce manual work and boost efficiency.</p>
+    </div>
+    <div>
+      <h4>🧠 AI Driven</h4>
+      <p>Modern AI integrations built for real business growth.</p>
+    </div>
+    <div>
+      <h4>🔒 Reliable & Scalable</h4>
+      <p>Clean code, secure structure, and future-proof solutions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+  SERVICES
+====================================================== -->
 <section class="section services" id="services">
   <h2 class="section-title">What We Automate</h2>
-  <p class="section-sub">High-impact automation services for modern teams</p>
+  <p class="section-sub">
+    High-impact automation services for modern teams
+  </p>
 
   <div class="services-grid">
     <div class="service-card">
@@ -65,48 +123,57 @@
   </div>
 </section>
 
-
-
-<!-- PROCESS -->
+<!-- ======================================================
+  PROCESS
+====================================================== -->
 <section class="section process" id="process">
   <h2 class="section-title">How We Work</h2>
-  <p class="section-sub">A simple, proven automation process</p>
+  <p class="section-sub">
+    A simple, proven automation process
+  </p>
 
   <div class="process-grid">
     <div class="step">
       <span class="step-num">01</span>
       <h3>Audit & Strategy</h3>
-      <p>We analyze workflows and identify automation opportunities.</p>
+      <p>
+        We analyze workflows and identify automation opportunities.
+      </p>
     </div>
 
     <div class="step">
       <span class="step-num">02</span>
       <h3>Build & Integrate</h3>
-      <p>Custom automations using APIs, AI & modern tools.</p>
+      <p>
+        Custom automations using APIs, AI & modern tools.
+      </p>
     </div>
 
     <div class="step">
       <span class="step-num">03</span>
       <h3>Launch & Optimize</h3>
-      <p>Deploy, monitor, and continuously improve performance.</p>
+      <p>
+        Deploy, monitor, and continuously improve performance.
+      </p>
     </div>
   </div>
 </section>
 
-<!-- Gallery -->
-
+<!-- ======================================================
+  AUTOMATION GALLERY (Infinite Scroll Ready)
+====================================================== -->
 <section class="section gallery">
   <h2>Automation Gallery</h2>
   <p>Replace placeholders with your automation demos</p>
 
   <div class="gallery-wrapper" id="galleryWrapper">
     <div class="gallery-track" id="galleryTrack">
-      <!-- Add <img> tag inside the gallery cards divs and link your image -->
+      <!-- Duplicate cards used for seamless loop -->
       <div class="gallery-card"></div>
       <div class="gallery-card"></div>
       <div class="gallery-card"></div>
       <div class="gallery-card"></div>
-      <!-- duplicate for infinite scroll -->
+
       <div class="gallery-card"></div>
       <div class="gallery-card"></div>
       <div class="gallery-card"></div>
@@ -115,12 +182,13 @@
   </div>
 </section>
 
-<!-- CASE -->
+<!-- ======================================================
+  CASE STUDIES
+====================================================== -->
 <section class="section cases" id="case">
   <h2 class="section-title">Case Studies</h2>
 
   <div class="case-grid">
-
     <div class="case-card">
       <h3>SaaS Automation</h3>
       <p>Reduced onboarding time by</p>
@@ -138,18 +206,19 @@
       <p>Monthly cost reduced</p>
       <span>$12k</span>
     </div>
-
   </div>
 </section>
 
-
-<!-- PRICING -->
+<!-- ======================================================
+  PRICING
+====================================================== -->
 <section class="section pricing" id="pricing">
   <h2 class="section-title">Simple, Transparent Pricing</h2>
-  <p class="section-sub">Choose a plan that fits your automation journey</p>
+  <p class="section-sub">
+    Choose a plan that fits your automation journey
+  </p>
 
   <div class="pricing-grid">
-
     <div class="price card">
       <h3>Starter</h3>
       <div class="amount">$29</div>
@@ -183,57 +252,84 @@
       </ul>
       <button class="btn price-btn">Contact Sales</button>
     </div>
-
   </div>
 </section>
 
+<!-- ======================================================
+  QUICK
+====================================================== -->
 
-<!-- FAQ -->
+<section class="quick-contact">
+  <h2>Let’s Automate Your Business</h2>
+  <p>
+    Have a project in mind? Let’s build smart automation that saves time and scales fast.
+  </p>
+
+  <div class="contact-actions">
+    <a href="#" class="btn">Book a Call</a>
+    <a href="mailto:hello@yourdomain.com" class="btn email-btn">Email Us</a>
+  </div>
+</section>
+
+<!-- ======================================================
+  FAQ
+====================================================== -->
 <section class="section faq">
   <h2 class="section-title">Frequently Asked Questions</h2>
 
   <div class="faq-item">
     <h4>How fast can automation be deployed?</h4>
-    <p>Most workflows are live within 48–72 hours depending on complexity.</p>
+    <p>
+      Most workflows are live within 48–72 hours depending on complexity.
+    </p>
   </div>
 
   <div class="faq-item">
     <h4>Do you support custom tools?</h4>
-    <p>Yes. We integrate CRMs, APIs, internal dashboards and AI tools.</p>
+    <p>
+      Yes. We integrate CRMs, APIs, internal dashboards and AI tools.
+    </p>
   </div>
 
   <div class="faq-item">
     <h4>Is my data secure?</h4>
-    <p>All automations follow industry security standards and encryption.</p>
+    <p>
+      All automations follow industry security standards and encryption.
+    </p>
   </div>
 </section>
 
-
-<!-- CTA -->
+<!-- ======================================================
+  CTA
+====================================================== -->
 <section class="cta">
   <h2>Ready to Automate Your Business?</h2>
-  <p>Book a free strategy call and see automation in action.</p>
+  <p>
+    Book a free strategy call and see automation in action.
+  </p>
 
   <div class="cta-actions">
-    <a href="#" class="btn" style="text-decoration: none;">Book Free Call</a>
-    <a href="#case" class="btn" style="background:transparent;color:white;border:1px solid rgba(255,255,255,.3); text-decoration: none;">View Case Studies</a>
+    <a class="btn">Book Free Call</a>
+    <a href="#case" class="btn btn-outline">
+      View Case Studies
+    </a>
   </div>
 </section>
 
-
+<!-- ======================================================
+  FOOTER
+====================================================== -->
 <footer class="footer">
   <div class="footer-grid">
 
-    <!-- Brand -->
     <div class="footer-brand">
       <h3>Digitora</h3>
       <p>
-        High-performance automation solutions for agencies,  
+        High-performance automation solutions for agencies,
         freelancers & digital teams worldwide.
       </p>
     </div>
 
-    <!-- Links -->
     <div class="footer-links">
       <h4>Company</h4>
       <a href="#">About</a>
@@ -250,7 +346,6 @@
       <a href="#">API Integration</a>
     </div>
 
-    <!-- CTA -->
     <div class="footer-cta">
       <h4>Start Automating</h4>
       <p>Book a free strategy call today.</p>
@@ -264,9 +359,7 @@
   </div>
 </footer>
 
-
-
-
+<!-- ================= Main Script ================= -->
 <script src="Assets/Js/script.js"></script>
 </body>
 </html>
